@@ -1,6 +1,5 @@
 package wooteco.subway.members.member.domain;
 
-
 import wooteco.security.core.userdetails.UserDetails;
 
 public class LoginMember implements UserDetails {
@@ -48,7 +47,7 @@ public class LoginMember implements UserDetails {
 
     @Override
     public boolean checkCredentials(Object credentials) {
-        String password = (String) credentials;
+        String password = (String)credentials;
         if (this.password == null || password == null) {
             return false;
         }
@@ -57,7 +56,8 @@ public class LoginMember implements UserDetails {
     }
 
     public int discountFare(int fare) {
-        if (age == 0 || age > 20) {
+        if (age == 0 || age > 19) {
+            System.out.println("##########");
             return fare;
         }
         if (age > 13) {

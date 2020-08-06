@@ -42,6 +42,7 @@ public class Line extends BaseEntity {
         int intervalTime) {
         this.name = name;
         this.color = color;
+        this.lineFare = new LineFare(0);
         this.startTime = startTime;
         this.endTime = endTime;
         this.intervalTime = intervalTime;

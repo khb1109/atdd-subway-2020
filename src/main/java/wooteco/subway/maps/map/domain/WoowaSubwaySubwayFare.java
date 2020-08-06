@@ -3,13 +3,15 @@ package wooteco.subway.maps.map.domain;
 import java.util.List;
 
 import wooteco.subway.maps.line.domain.Line;
+import wooteco.subway.members.member.domain.LoginMember;
 
 public class WoowaSubwaySubwayFare extends SubwayFare {
 
     private final int distance;
     private final List<Line> lines;
 
-    public WoowaSubwaySubwayFare(int distance, List<Line> lines) {
+    public WoowaSubwaySubwayFare(int distance, List<Line> lines, LoginMember loginMember) {
+        super(loginMember);
         this.distance = distance;
         this.lines = lines;
     }
@@ -31,6 +33,6 @@ public class WoowaSubwaySubwayFare extends SubwayFare {
         if (distance >= 50) {
             weight = 8 + ((distance - 50) / 8);
         }
-        return weight;
+        return weight * 100;
     }
 }

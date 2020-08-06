@@ -1,6 +1,5 @@
 package wooteco.subway.maps.line.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import wooteco.subway.maps.line.exception.InvalidFareException;
@@ -8,7 +7,6 @@ import wooteco.subway.maps.line.exception.InvalidFareException;
 @Embeddable
 public class LineFare {
 
-    @Column(nullable = true)
     private int amount;
 
     public LineFare() {
