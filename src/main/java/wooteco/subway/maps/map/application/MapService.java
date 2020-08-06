@@ -21,7 +21,6 @@ import wooteco.subway.maps.map.dto.PathResponseAssembler;
 import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.maps.station.dto.StationResponse;
-import wooteco.subway.members.member.domain.LoginMember;
 
 @Service
 @Transactional
@@ -49,8 +48,7 @@ public class MapService {
 
     @Transactional
     public PathResponse findPath(
-        Long source, Long target, PathType type,
-        LoginMember loginMember
+        Long source, Long target, PathType type
     ) {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
@@ -59,7 +57,7 @@ public class MapService {
         List<Line> containLines = findLinesByPath(lines, subwayPath.getLineStationEdges());
 
         WoowaSubwaySubwayFare woowaSubwayFare = new WoowaSubwaySubwayFare(subwayPath.calculateDistance(), containLines,
-            loginMember);
+            null);
 
         return PathResponseAssembler.assemble(subwayPath, stations, woowaSubwayFare);
     }

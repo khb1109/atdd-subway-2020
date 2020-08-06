@@ -57,7 +57,6 @@ public class LoginMember implements UserDetails {
 
     public int discountFare(int fare) {
         if (age == 0 || age > 19) {
-            System.out.println("##########");
             return fare;
         }
         if (age > 13) {
