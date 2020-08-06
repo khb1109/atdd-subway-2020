@@ -68,6 +68,13 @@ public class PathAcceptanceTest extends AcceptanceTest {
         총_거리와_소요_시간을_함께_응답함(response, 3, 4);
     }
 
+    @DisplayName("두 역의 거리별 요금을 조회한다.")
+    @Test
+    void name() {
+        ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L);
+
+        요금정보를_조회한다(response, 1250);
+    }
 
     @DisplayName("두 역의 최소 시간 경로를 조회한다.")
     @Test
