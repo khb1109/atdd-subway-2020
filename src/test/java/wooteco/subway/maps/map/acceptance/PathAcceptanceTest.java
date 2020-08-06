@@ -80,17 +80,17 @@ public class PathAcceptanceTest extends AcceptanceTest {
         총_거리와_소요_시간을_함께_응답함(response, 3, 4);
     }
 
-    @DisplayName("두 역의 거리별 요금을 조회한다.")
+    @DisplayName("로그인을 하지않은 유저가 두 역의 거리별 요금을 조회한다.")
     @Test
     void checkFare() {
-        ExtractableResponse<Response> response = 거리_경로_조회_요청(tokenResponse, "DISTANCE", 1L, 3L);
+        ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L);
 
         요금정보를_조회한다(response, 1250);
     }
 
-    @DisplayName("두 역의 거리별 요금을 조회한다.")
+    @DisplayName("로그인 한 유저가 두 역의 거리별 요금을 조회한다.")
     @Test
-    void name2() {
+    void loginUser() {
         ExtractableResponse<Response> response = 거리_경로_조회_요청(tokenResponse, "DISTANCE", 1L, 3L);
 
         요금정보를_조회한다(response, 1250);

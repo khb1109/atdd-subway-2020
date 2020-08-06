@@ -54,7 +54,7 @@ public class PathDocumentation extends Documentation {
             new StationResponse(3L, "2호선", LocalDateTime.now(), LocalDateTime.now()))
             , 10, 10, 1250);
 
-        BDDMockito.given(mapService.findPath(anyLong(), anyLong(), any(PathType.class)))
+        BDDMockito.given(mapService.findPath(anyLong(), anyLong(), any(PathType.class), null))
             .willReturn(pathResponse);
 
         given().log().all().

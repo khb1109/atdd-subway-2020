@@ -16,6 +16,10 @@ import wooteco.subway.maps.map.dto.PathResponse;
 import wooteco.subway.maps.station.dto.StationResponse;
 
 public class PathAcceptanceStep {
+    public static ExtractableResponse<Response> 거리_경로_조회_요청(String type, long source, long target) {
+        return 거리_경로_조회_요청(new TokenResponse(""), type, source, target);
+    }
+
     public static ExtractableResponse<Response> 거리_경로_조회_요청(TokenResponse tokenResponse,
         String type, long source, long target) {
         return RestAssured.given().log().all().
