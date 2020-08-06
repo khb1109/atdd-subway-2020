@@ -13,14 +13,17 @@ const getters = {
 }
 
 const mutations = {
-  setPath(state, pathResult) {
+  [SET_PATH](state, pathResult) {
     state.pathResult = pathResult
   }
 }
 
 const actions = {
-  async searchPath({ commit }, {}) {
-    return PathService.get().then(({ data }) => {
+  async [SEARCH_PATH]({ commit }, items) {
+    console.log("test");
+    const param = new URLSearchParams(items).toString();
+    return PathService.get(param).then(({ data }) => {
+      console.log(data)
       commit('setPath', data)
     })
   }

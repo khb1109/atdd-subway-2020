@@ -56,7 +56,7 @@
                                                 <tr>
                                                     <td>{{ pathResult.duration }}분</td>
                                                     <td>{{ pathResult.distance }}km</td>
-                                                    <td>{{ pathResult.woowaSubwayFare }}원</td>
+                                                    <td>{{ pathResult.fare }}원</td>
                                                 </tr>
                                                 </tbody>
                                             </template>
@@ -76,7 +76,7 @@
                                                 <tr>
                                                     <td>{{ pathResult.duration }}분</td>
                                                     <td>{{ pathResult.distance }}km</td>
-                                                    <td>{{ pathResult.woowaSubwayFare }}원</td>
+                                                    <td>{{ pathResult.fare }}원</td>
                                                 </tr>
                                                 </tbody>
                                             </template>
@@ -159,7 +159,7 @@
                                                 <tr>
                                                     <td>{{ pathResult.duration }}분</td>
                                                     <td>{{ pathResult.distance }}km</td>
-                                                    <td>{{ pathResult.woowaSubwayFare }}원</td>
+                                                    <td>{{ pathResult.fare }}원</td>
                                                 </tr>
                                                 </tbody>
                                             </template>
@@ -195,13 +195,15 @@
 
 <script>
     import validator from '@/utils/validator'
-    import {mapActions, mapGetters, mapMutations} from 'vuex'
     import {SHOW_SNACKBAR} from '@/store/shared/mutationTypes'
     import {PATH_TYPE, SNACKBAR_MESSAGES} from '@/utils/constants'
     import {FETCH_STATIONS, SEARCH_PATH} from '@/store/shared/actionTypes'
     import AddFavoriteButton from '@/views/path/components/AddFavoriteButton'
     import dialog from '@/mixins/dialog'
     import Dialog from '@/components/dialogs/Dialog'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
+
+    import {SET_PATH} from "../../store/shared/mutationTypes";
 
     export default {
         name: 'PathPage',
@@ -219,10 +221,11 @@
             this.initDepartureTimeView()
         },
         methods: {
-            ...mapMutations([SHOW_SNACKBAR]),
-            ...mapActions([SEARCH_PATH, FETCH_STATIONS]),
-            async onSearchResult() {
+            ...mapMutations([SHOW_SNACKBAR, SET_PATH]),
+            ...mapActions([FETCH_STATIONS, SEARCH_PATH]),
+            async onSearchResult(commit) {
                 try {
+                    this.searchPath(this.path);
                 } catch (e) {
                     this.showSnackbar(SNACKBAR_MESSAGES.COMMON.FAIL)
                     console.error(e)
