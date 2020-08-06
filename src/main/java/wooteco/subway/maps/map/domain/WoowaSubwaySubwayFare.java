@@ -16,7 +16,10 @@ public class WoowaSubwaySubwayFare extends SubwayFare {
 
     @Override
     protected int stationExtraCharge() {
-        return 0;
+        return lines.stream()
+            .mapToInt(line -> line.getLineFare().getAmount())
+            .max()
+            .orElse(0);
     }
 
     @Override
