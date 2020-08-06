@@ -1,17 +1,17 @@
 package wooteco.subway.maps.map.domain;
 
-import java.util.Map;
+import java.util.List;
 
-import wooteco.subway.maps.station.domain.Station;
+import wooteco.subway.maps.line.domain.Line;
 
 public class WoowaSubwaySubwayFare extends SubwayFare {
 
     private final int distance;
-    private final Map<Long, Station> stations;
+    private final List<Line> lines;
 
-    public WoowaSubwaySubwayFare(int distance, Map<Long, Station> stations) {
+    public WoowaSubwaySubwayFare(int distance, List<Line> lines) {
         this.distance = distance;
-        this.stations = stations;
+        this.lines = lines;
     }
 
     @Override

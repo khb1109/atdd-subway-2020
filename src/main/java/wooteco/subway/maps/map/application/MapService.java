@@ -11,6 +11,7 @@ import wooteco.subway.maps.line.application.LineService;
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.dto.LineResponse;
 import wooteco.subway.maps.line.dto.LineStationResponse;
+import wooteco.subway.maps.map.domain.LineStationEdge;
 import wooteco.subway.maps.map.domain.PathType;
 import wooteco.subway.maps.map.domain.SubwayPath;
 import wooteco.subway.maps.map.domain.WoowaSubwaySubwayFare;
@@ -49,9 +50,22 @@ public class MapService {
         List<Line> lines = lineService.findLines();
         SubwayPath subwayPath = pathService.findPath(lines, source, target, type);
         Map<Long, Station> stations = stationService.findStationsByIds(subwayPath.extractStationId());
-        WoowaSubwaySubwayFare woowaSubwayFare = new WoowaSubwaySubwayFare(subwayPath.calculateDistance(), stations);
+
+        List<Line> containLines = findLinesByPath(lines, subwayPath.getLineStationEdges());
+
+        WoowaSubwaySubwayFare woowaSubwayFare = new WoowaSubwaySubwayFare(subwayPath.calculateDistance(), containLines);
 
         return PathResponseAssembler.assemble(subwayPath, stations, woowaSubwayFare);
+    }
+
+    private List<Line> findLinesByPath(List<Line> lines, List<LineStationEdge> subwayPath) {
+        Map<Long, Line> lineMap = lines.stream()
+            .collect(Collectors.toMap(line -> line.getId(), line -> line));
+
+        return subwayPath.stream()
+            .filter(it -> lineMap.containsKey(it.getLineId()))
+            .map(it -> lineMap.get(it.getLineId()))
+            .collect(Collectors.toList());
     }
 
     private Map<Long, Station> findStations(List<Line> lines) {
