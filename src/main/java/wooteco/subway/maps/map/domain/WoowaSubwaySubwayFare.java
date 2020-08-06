@@ -21,13 +21,13 @@ public class WoowaSubwaySubwayFare extends SubwayFare {
 
     @Override
     protected int distanceExtraCharge() {
-        return getWeight(10, 5) + getWeight(50, 8);
-    }
-
-    private int getWeight(int condition, int criteria) {
-        if (distance - condition >= 0) {
-            return (distance - condition) / criteria + 1;
+        int weight = 0;
+        if (distance >= 10 && distance < 50) {
+            weight = (distance - 10) / 5 + 1;
         }
-        return 0;
+        if (distance >= 50) {
+            weight = 8 + ((distance - 50) / 8);
+        }
+        return weight;
     }
 }
