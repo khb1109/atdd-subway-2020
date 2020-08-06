@@ -1,12 +1,12 @@
 const validator = {
   path: {
-    source: [],
-    target: []
+    source: [(v) => !!v, (v) => Number.isInteger(v), (v) => v >= 0],
+    target: [(v) => !!v, (v) => Number.isInteger(v), (v) => v >= 0],
   },
   departureTime: {
-    dayTime: [],
-    hour: [],
-    minute: []
+    dayTime: [(v) => !!v, (v) => (v === '오전' || v === '오후')],
+    hour: [[(v) => !!v, (v) => Number.isInteger(v), (v) => (v >= 0 && v < 24)]],
+    minute: [[(v) => !!v, (v) => Number.isInteger(v), (v) => (v >= 0 && v < 60)]]
   },
   stationName: [(v) => !!v || '이름 입력이 필요합니다.', (v) => v.length > 0 || '이름은 1글자 이상 입력해야 합니다.'],
   line: {
@@ -28,7 +28,7 @@ const validator = {
     age: [(v) => !!v || '나이 입력이 필요합니다.', (v) => v > 0 || '나이는 1살 이상 이어야 합니다.'],
     password: [(v) => !!v || '비밀번호 입력이 필요합니다.'],
     confirmPassword: [(v) => !!v || '비밀번호 확인이 필요합니다.', (v, c) => v === c || '비밀번호가 일치하지 않습니다.']
-  }
+  },
 }
 
 export default validator
