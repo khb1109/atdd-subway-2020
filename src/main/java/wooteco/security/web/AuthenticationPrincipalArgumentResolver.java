@@ -11,6 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import wooteco.security.core.Authentication;
 import wooteco.security.core.AuthenticationPrincipal;
+import wooteco.security.core.NoValidate;
 import wooteco.security.core.context.SecurityContextHolder;
 
 public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArgumentResolver {
@@ -41,14 +42,26 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            throw new AuthorizationException();
+
+        boolean notValid = parameter.hasMethodAnnotation(NoValidate.class);
+
+        checkAuthentication(authentication, notValid);
+
+        if (authentication == null && notValid) {
+            return null;
         }
+
         if (authentication.getPrincipal() instanceof Map) {
             return extractPrincipal(parameter, authentication);
         }
 
         return authentication.getPrincipal();
+    }
+
+    private void checkAuthentication(Authentication authentication, boolean notValid) {
+        if (authentication == null && !notValid) {
+            throw new AuthorizationException();
+        }
     }
 
     private Object extractPrincipal(MethodParameter parameter, Authentication authentication) {
